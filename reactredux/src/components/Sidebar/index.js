@@ -2,7 +2,9 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-const Sidebar = ({ modules }) => (
+import * as CourseActions from "../../store/actions/course";
+
+const Sidebar = ({ modules, dispatch }) => (
   <aside>
     {modules.map((module) => {
       return (
@@ -10,7 +12,18 @@ const Sidebar = ({ modules }) => (
           <strong>{module.title}</strong>
           <ul>
             {module.lessons.map((lesson) => {
-              return <li key={lesson.id}>{lesson.title}</li>;
+              return (
+                <li key={lesson.id}>
+                  {lesson.title}
+                  <button
+                    onClick={() =>
+                      dispatch(CourseActions.toggleLesson(module, lesson))
+                    }
+                  >
+                    Selecionar
+                  </button>
+                </li>
+              );
             })}
           </ul>
         </div>
@@ -19,4 +32,4 @@ const Sidebar = ({ modules }) => (
   </aside>
 );
 
-export default connect((state) => ({ modules: state.modules }))(Sidebar);
+export default connect((state) => ({ modules: state.course.modules }))(Sidebar);
