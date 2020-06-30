@@ -1,24 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Sidebar extends Component {
-  render() {
-    const { modules } = this.props;
+import { connect } from "react-redux";
 
-    return (
-      <aside>
-        {modules.map((module) => {
-          return (
-            <div key={module.id}>
-              <strong>{module.title}</strong>
-              <ul>
-                {module.lessons.map((lesson) => {
-                  return <li key={lesson.id}>{lesson.title}</li>;
-                })}
-              </ul>
-            </div>
-          );
-        })}
-      </aside>
-    );
-  }
-}
+const Sidebar = ({ modules }) => (
+  <aside>
+    {modules.map((module) => {
+      return (
+        <div key={module.id}>
+          <strong>{module.title}</strong>
+          <ul>
+            {module.lessons.map((lesson) => {
+              return <li key={lesson.id}>{lesson.title}</li>;
+            })}
+          </ul>
+        </div>
+      );
+    })}
+  </aside>
+);
+
+export default connect((state) => ({ modules: state }))(Sidebar);
